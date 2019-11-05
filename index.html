@@ -1,0 +1,774 @@
+<head>
+    <meta charset="UTF-8">
+    <title>爱乐盟</title>
+    <meta name="keywords" content="爱乐盟">
+    <meta name="description" content="爱乐盟">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="wap-font-scale" content="no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <link rel="shortcut icon " type="images/x-icon" href="images/logo/logo.png">
+    <!-- 引入js -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- 引入样式 element ui， el 开头的是 element-->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入样式 semantic ui， class = ui 的是 semantic -->
+    <link rel="stylesheet" href="css/semantic.min.css">
+    <script src="css/semantic.min.js"></script>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script type="text/javascript" src="https://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+    <style type="text/css">
+        .iw_poi_title {
+            color: #CC5522;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            padding-right: 13px;
+            white-space: nowrap
+        }
+
+        .iw_poi_content {
+            font: 12px arial, sans-serif;
+            overflow: visible;
+            padding-top: 4px;
+            white-space: -moz-pre-wrap;
+            word-wrap: break-word
+        }
+
+        /*Global Setting*/
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            font-family: roboto;
+            background-color: #f6f6f6;
+        }
+
+        .container {
+            max-width: 1500px;
+            display: block;
+            margin: 0 auto;
+            width: calc(100% - 200px);
+        }
+
+        .none {
+            visibility: hidden;
+        }
+
+        .right {
+            float: right;
+            display: block
+        }
+
+        .content, .header {
+            margin: 0 2%;
+        }
+
+        .slideshow {
+            margin-top: -12px;
+        }
+
+        .header {
+            height: 65px;
+        }
+
+        .logo img {
+            max-width: 80px;
+            margin: 5% 0;
+        }
+
+        /*Overrides Element UI*/
+        .orange {
+            color: #F39E33;
+        }
+
+        .el-button--primary {
+            background-color: #F39E33;
+            border-color: #F39E33;
+        }
+
+        .el-button--primary:hover, .el-button--primary:focus {
+            background-color: #F8B969;
+            border-color: #F8B969;
+        }
+
+        .el-button--text {
+            color: #F39E33;
+        }
+
+        .ui.styled.fluid.accordion {
+            margin: 6px 0;
+        }
+
+        /*TEXT STYLE*/
+        .time {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: bold;
+            margin-bottom: 24px;
+            font-size: 1.2em;
+        }
+
+        footer p, footer ul, .copyright {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: normal;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-left: 10px;
+            margin-top: 0px;
+        }
+
+        h2 {
+            font-size: 16px;
+            color: grey;
+        }
+
+        h3 {
+            color: white;
+            font-size: 2em;
+        }
+
+        .contact {
+            font-size: 1.2em;
+            margin-top: 18%;
+        }
+
+        .a_name {
+            font-size: 1.4em;
+            color: black;
+        }
+
+        .a_meta {
+            font-size: 1.2em;
+            color: grey;
+            font-weight: 400;
+        }
+
+        .lh_36 {
+            line-height: 36px;
+        }
+
+        /*option child 1,2 are pointing to the arrow, so starting from 3*/
+        .el-carousel__item:nth-child(3) {
+            background-image: url("https://api.ai2hit.com/static/ai2hit/images/slides/genetest.jpg");
+            background-size: cover;
+        }
+
+        .el-carousel__item:nth-child(4) {
+            background-image: url("https://api.ai2hit.com/static/ai2hit/images/slides/jianshen.jpg");
+            background-size: cover;
+        }
+
+        .el-carousel__item:nth-child(5) {
+            background-image: url("https://api.ai2hit.com/static/ai2hit/images/slides/wangqiu.jpg");
+            background-size: cover;
+        }
+
+        .el-carousel__item:nth-child(6) {
+            background-image: url("https://api.ai2hit.com/static/ai2hit/images/slides/ai.jpg");
+            background-size: cover;
+        }
+
+        .el-carousel__item:nth-child(7) {
+            background-image: url("https://api.ai2hit.com/static/ai2hit/images/slides/meilejia.png");
+            background-size: cover;
+        }
+
+        .slidecontent {
+            margin: 3% 5%;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 2% 4%;
+        }
+
+        .slidetext {
+            text-shadow: 0 0 30px black, 0 0 2px black;
+        }
+
+        /*color guide: orange: rgba(244,156,30); dark orange rgb(191,124,28)*/
+
+        footer {
+            margin-top: 30px;
+            padding: 2% 2%;;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+            background: linear-gradient(to bottom, rgba(47, 47, 47, 1) 0%, rgba(54, 54, 54, 1) 100%);
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .copyright {
+            background: #202020;
+            height: 32px;
+            z-index: -1;
+            padding: 1% 2%;
+            font-size: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .contact {
+                margin: 0;
+                display: block;
+                clear: both;
+            }
+
+            footer .el-col {
+                margin-top: 20px;
+            }
+
+            .right.menu {
+                display: block;
+                top: 48px;
+                left: 0px;
+                position: absolute;
+                border-top: 1px solid #ccc;
+                min-width: 768px;
+            }
+
+            .slideshow {
+                margin-top: 25px;
+            }
+
+            .ui.top.fixed.menu {
+                height: 90px;
+            }
+
+            .ui.top.fixed.menu .first {
+                margin-top: -40px;
+                min-width: 768px;
+            }
+        }
+
+        .loading {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: fixed;
+            display: block;
+            background-color: #eee;
+            z-index: 99;
+            text-align: center;
+        }
+
+        .loading-image {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+            z-index: 100;
+        }
+
+        /* 下拉内容 (默认隐藏) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 下拉菜单的链接 */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* 在鼠标移上去后显示下拉菜单 */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+    </style>
+<body>
+<div class="loading">
+    <img class="loading-image" src="images/pp_loading.gif"
+         alt="Loading..."/>
+</div>
+<div id="app">
+    <div class="header">
+        <div class="ui top fixed menu">
+            <div class="item first">
+                <img src="images/logo/logo.png">
+            </div>
+            <div class="right menu">
+                <a class="item" data-tab="tab-home"><i class="el-icon-s-home"></i>首页</a>
+                <a class="item" data-tab="tab-about">关于乐盟健康</a>
+                <a class="item" data-tab="tab-healthmanage">智能健康管理</a>
+                <a class="item" href="http://localhost:9999">爱健康新消费</a>
+                <a class="item" data-tab="tab-contactus">联系方式</a>
+            </div>
+        </div>
+    </div>
+
+    <!--幻灯片-->
+    <div class="slideshow">
+
+        <el-carousel :interval="5000" arrow="always">
+
+            <el-carousel-item>
+
+            </el-carousel-item>
+
+            <el-carousel-item>
+
+            </el-carousel-item>
+
+            <el-carousel-item>
+
+            </el-carousel-item>
+
+            <el-carousel-item>
+
+            </el-carousel-item>
+
+            <el-carousel-item>
+
+            </el-carousel-item>
+
+        </el-carousel>
+    </div>
+
+
+    <div class="content">
+        <div class="ui divider"></div>
+        <div class="ui active tab" data-tab="tab-home">
+            <h2>呵护-您的健康</h2>
+
+            <!--减肥塑身-->
+            <div class="ui styled fluid accordion" v-for="activity in run1">
+                <div class="title ">
+                    <el-row>
+                        <el-col :xs="1" :span="2" style="margin-top:12px"><i class="dropdown icon "></i></el-col>
+                        <el-col :xs="23" :span="6" class="a_name lh_36">减肥塑身</el-col>
+
+
+                        </el-col>
+                        <el-col :xs="24" :span="4">
+                            <!-- <el-button type="primary" v-bind:class="activity.active"></el-button> -->
+
+
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="content">
+                    <h2>本方案是为了想要减肥塑身的人群设计的。我们的减肥塑身方案是个系统化、因人而异的整体方案，包括有乐盟健康咨询与管理、乐盟基础健康因子与状态量测、乐盟健康减肥营养保健套餐、乐盟健康基因检测
+                        、乐盟智能健康管理工具/系统、不同周期与地点的乐盟减肥活动</h2>
+
+                </div>
+
+            </div><!--End Accordion-->
+            <!--慢病调理-->
+            <div class="ui styled fluid accordion" v-for="activity in run1">
+                <div class="title ">
+                    <el-row>
+                        <el-col :xs="1" :span="2" style="margin-top:12px"><i class="dropdown icon "></i></el-col>
+                        <el-col :xs="23" :span="6" class="a_name lh_36">慢病调理</el-col>
+
+
+                        </el-col>
+                        <el-col :xs="24" :span="4">
+                            <!-- <el-button type="primary" v-bind:class="activity.active"></el-button> -->
+
+
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="content">
+                    <h2>乐盟健康对慢性病的理念是无药物不开刀的生活形态理疗方式，对于一个对健康管理有需求的客户我们需要为他们提供个性化的健康解决方案</h2>
+
+                </div>
+
+            </div><!--End Accordion-->
+            <!--健康检测-->
+            <div class="ui styled fluid accordion" v-for="activity in run1">
+                <div class="title ">
+                    <el-row>
+                        <el-col :xs="1" :span="2" style="margin-top:12px"><i class="dropdown icon "></i></el-col>
+                        <el-col :xs="23" :span="6" class="a_name lh_36">健康检测</el-col>
+
+
+                        </el-col>
+                        <el-col :xs="24" :span="4">
+                            <!-- <el-button type="primary" v-bind:class="activity.active"></el-button> -->
+
+
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="content">
+                    <h2>乐盟健康为了精准匹配适合的健康方案与产品给用户，我们建议用户从事几种需要的健康检测，从科学数据里客观分析用户真实健康状态与可能拥有的健康危险因子，进而匹配适合的产品与服务。</h2>
+
+                </div>
+
+            </div><!--End Accordion-->
+            <!--健康食品-->
+            <div class="ui styled fluid accordion" v-for="activity in run1">
+                <div class="title ">
+                    <el-row>
+                        <el-col :xs="1" :span="2" style="margin-top:12px"><i class="dropdown icon "></i></el-col>
+                        <el-col :xs="23" :span="6" class="a_name lh_36">健康食品</el-col>
+
+
+                        </el-col>
+                        <el-col :xs="24" :span="4">
+                            <!-- <el-button type="primary" v-bind:class="activity.active"></el-button> -->
+
+
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="content">
+                    <h2>配合消费者的健康管理需求， 乐盟健康秉承绿色健康的理念结合优质先端生物科技提供消费者、科学、健康、有效、无副作用、天然优质原料、又安全的原生态美味保健品。</h2>
+
+                </div>
+
+            </div><!--End Accordion-->
+            <!--运动活动-->
+            <div class="ui styled fluid accordion" v-for="activity in run1">
+                <div class="title ">
+                    <el-row>
+                        <el-col :xs="1" :span="2" style="margin-top:12px"><i class="dropdown icon "></i></el-col>
+                        <el-col :xs="23" :span="6" class="a_name lh_36">运动活动</el-col>
+
+
+                        </el-col>
+                        <el-col :xs="24" :span="4">
+                            <!-- <el-button type="primary" v-bind:class="activity.active"></el-button> -->
+
+
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="content">
+                    <h2>健康活动是智能健康管理系统里重要的健康方案里的一环，这些活动是适合用户健康状态的不同类型的健康活动。</h2>
+
+                </div>
+
+            </div><!--End Accordion-->
+        </div>
+        <div class="ui tab" data-tab="tab-about">
+            <!-- Tab Content !-->
+            <div class="ui message">
+                <div class="header">
+                    <h1>乐盟健康</h1>
+                </div>
+                <h2>&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                    这两年由于经济繁荣，知识普及，加上大健康产业获得国家政策大力度的支持，广大民众的健康意识渐渐抬头，大家逐渐重视平常的保健养生，希望经由平常生活的改进而改善自己的体质，尽量避免健康状态持续恶化，生病了再去看医生。但是对于平常保健养生、改善亚健康的状态缺乏个性化的方案与客观的目标追求与可行之道。有鉴于此，我们成立了智能健康管理项目，运用团队在数据分析、人工智能、与云计算等相关领域的深厚专业背景，努力开发科学智能的闭环系统以便提供亚健康人群、慢病人群、与注重健康的广大民众一个精准适合个人的健康管理方案。</h2>
+
+            </div>
+        </div>
+        <div class="ui tab" data-tab="tab-healthmanage">
+            <!-- Tab Content !-->
+            <div class="ui message">
+                <div class="header">
+                    <h1>智能健康管理</h1>
+                </div>
+                <h2>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                    国内民众虽有健康保养的意识，但是常常因为平常的健康保养目的性不强，让一般人兴趣缺缺。我们智能健康管理项目提供了一个科学智能的闭环系统，让用户可以清楚自己的目标，从我们的平台获得健康保养所需的方案、产品、与服务，并且可以追溯目标；更重要的是,保健、养生，方法千万种，但是，没有普罗大众都一致的解决方案，毕竟每个人的基因与状态都不同。我们智能健康管理项目提供了一个精准适合个人的方案，让不同的个体最有效的受益；</h2>
+            </div>
+        </div>
+        <div class="ui tab" data-tab="tab-contactus">
+            <!-- Tab Content !-->
+            <!--百度地图容器-->
+            <el-row>
+                <el-col :span="18">
+                    <div style="width:95%;height:550px;border:#ccc solid 1px;" id="dituContent"></div>
+                </el-col>
+
+                <el-col :span="6">
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <h1>联系我们</h1>
+                            <!--<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
+                        </div>
+                        <div class="text item"><p>加盟热线：13405814771</p></div>
+                        <div class="text item"><p>咨询热线：13405814771</p></div>
+                        <div class="text item"><p>售后QQ&nbsp;：2480929803</p></div>
+                        <div class="text item"><p>联系邮箱：2480929803@qq.com</p></div>
+                        <div class="text item"><p>联系地址：南京市玄武区玄武大道108号聚慧园一号楼（人工智能研究院）5楼</p></div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
+
+    </div><!--End Content-->
+
+
+    <footer>
+        <el-row>
+            <el-col :xs="24" :span="10">
+                <h3>企业地址</h3>
+                <div class="ui inverted divider"></div>
+                <p>玄武区玄武大道108号聚慧园一号楼(人工智能研究院）5楼</p>
+                <p>江苏省南京市</p>
+            </el-col>
+            <el-col :xs="0" :span="4">&nbsp;</el-col>
+            <el-col :xs="24" :span="10">
+                <h3>联系我们</h3>
+                <div class="ui inverted divider"></div>
+                <p>sales1@ai2hit.com</p>
+                <p>QQ：2480929803</p>
+                <p></p>
+                <img width="100px" height="100px;"
+                     src="https://api.ai2hit.com/static/ai2hit/images/logo/ai2hitCode.png"/>
+            </el-col>
+        </el-row>
+    </footer>
+    <div class="copyright">
+        <span>© Copyright © 2019 AI2Hit All rights reserved.</span>
+    </div>
+
+
+</div><!-- App ID ends -->
+</body>
+<!-- 先引入 Vue -->
+<script src="https://api.ai2hit.com/static/ai2hit/js/vue.js"></script>
+<!--这两个不是一样的吗？-->
+<!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+<!--<script src="https://unpkg.com/vue"></script>-->
+<!-- 引入组件库 -->
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<script src="https://api.ai2hit.com/static/ai2hit/js/index.js"></script>
+<script>
+	$(window).on('load', function () {
+		$('.slideshow', '.content').hide(0).delay(2000).show(0);
+		$('.loading').fadeOut(3000);
+	});
+
+	//创建和初始化地图函数：
+	function initMap() {
+		createMap();//创建地图
+		setMapEvent();//设置地图事件
+		addMapControl();//向地图添加控件
+		addMarker();//向地图中添加marker
+	}
+
+	//创建地图函数：
+	function createMap() {
+		var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+		var point = new BMap.Point(118.892654, 32.104555);//定义一个中心点坐标
+		map.centerAndZoom(point, 17);//设定地图的中心点和坐标并将地图显示在地图容器中
+		window.map = map;//将map变量存储在全局
+	}
+
+	//地图事件设置函数：
+	function setMapEvent() {
+		map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+		map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+		map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+		map.enableKeyboard();//启用键盘上下左右键移动地图
+	}
+
+	//地图控件添加函数：
+	function addMapControl() {
+		//向地图中添加缩放控件
+		var ctrl_nav = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_ZOOM});
+		map.addControl(ctrl_nav);
+		//向地图中添加比例尺控件
+		var ctrl_sca = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+		map.addControl(ctrl_sca);
+	}
+
+	//标注点数组
+	var markerArr = [{
+		title: "乐盟健康",
+		content: "地址：玄武区玄武大道108号聚慧园一号楼<br/>电话：13405814771",
+		point: "118.890606|32.102276",
+		isOpen: 1,
+		icon: {w: 21, h: 21, l: 0, t: 0, x: 6, lb: 5}
+	}
+	];
+
+	//创建marker
+	function addMarker() {
+		for (var i = 0; i < markerArr.length; i++) {
+			var json = markerArr[i];
+			var p0 = json.point.split("|")[0];
+			var p1 = json.point.split("|")[1];
+			var point = new BMap.Point(p0, p1);
+			var iconImg = createIcon(json.icon);
+			var marker = new BMap.Marker(point, {icon: iconImg});
+			var iw = createInfoWindow(i);
+			var label = new BMap.Label(json.title, {"offset": new BMap.Size(json.icon.lb - json.icon.x + 10, -20)});
+			marker.setLabel(label);
+			map.addOverlay(marker);
+			label.setStyle({
+				borderColor: "#808080",
+				color: "#333",
+				cursor: "pointer"
+			});
+
+			(function () {
+				var index = i;
+				var _iw = createInfoWindow(i);
+				var _marker = marker;
+				_marker.addEventListener("click", function () {
+					this.openInfoWindow(_iw);
+				});
+				_iw.addEventListener("open", function () {
+					_marker.getLabel().hide();
+				})
+				_iw.addEventListener("close", function () {
+					_marker.getLabel().show();
+				})
+				label.addEventListener("click", function () {
+					_marker.openInfoWindow(_iw);
+				})
+				if (!!json.isOpen) {
+					label.hide();
+					_marker.openInfoWindow(_iw);
+				}
+			})()
+		}
+	}
+
+	//创建InfoWindow
+	function createInfoWindow(i) {
+		var json = markerArr[i];
+		var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>" + json.content + "</div>");
+		return iw;
+	}
+
+	//创建一个Icon
+	function createIcon(json) {
+		var icon = new BMap.Icon("https://www.ailemong.com/images/logo/logo.png", new BMap.Size(json.w, json.h), {
+			imageOffset: new BMap.Size(-json.l, -json.t),
+			infoWindowOffset: new BMap.Size(json.lb + 5, 1),
+			offset: new BMap.Size(json.x, json.h)
+		})
+		return icon;
+	}
+
+	initMap();//创建和初始化地图
+
+
+	$(document).ready(function () {
+		initMap();//创建和初始化地图
+
+		$('.menu .item').tab();
+		$('.ui.accordion').accordion();
+
+		$('.ui.green.menu')
+			.on('click', '.item', function () {
+				if (!$(this).hasClass('dropdown')) {
+					$(this)
+						.addClass('active')
+						.siblings('.item')
+						.removeClass('active');
+				}
+			});
+	});
+
+
+	var app = new Vue({
+		el: '#app',
+		data: {
+			run1: [1],
+			activities: [
+				{name: '斯坦福快车道，第一网球大学交流会', time: '7月30日－8月5日', year: '2017', action: '报名', action2: '关注', read: "了解详情"},
+				{
+					name: '魔都顶级网球赛事，去感受上海和网球结合的魅力',
+					time: '10月22日－10月29日',
+					year: '2017',
+					action: '报名',
+					action2: '关注',
+					read: "了解详情"
+				},
+				{
+					name: '新加坡WTA总决赛，你怎能错过的唯一女子网球冠军赛',
+					time: '10月22日－10月29日',
+					year: '2017',
+					action: '报名',
+					action2: '关注',
+					read: "了解详情"
+				},
+			],
+			items: [
+				{name: '云南昆明网球游🎾', time: '7月6日—7月13日', location: '云南昆明，安宁', active: 'none'},
+				{
+					name: '斯坦福网球公开赛夏令营',
+					time: '7月30日－8月5日',
+					location: '斯坦福大学 🇺🇸',
+					action: '观赛',
+					action2: '旅游',
+					action3: "培训",
+					deadline: "2017年6月30日",
+					contact: "彭健彪: 173-6186-2805",
+					highlight: "★世界第一个网球大学，众多网球好手的母校, ★世界顶级网球教练陪同，最前卫的网球教学课程体验,★亲身体验网球梦幻学府的迷人风光",
+					description: "众所周知，美国拥有众多令人向往的顶级高等学府，如果你热爱工商学，你一定会向往哈佛大学，如果你热爱理工科，那麻省理工绝对是你的不二选择，但如果你是一位深情的网球爱好者，你会向往哪里？<br/>世界第一网球高等学府，斯坦福大学绝对会是你最向往的地方；位于美国加州旧金山的斯坦福大学，在整个网球界有着不可撼动的地位，这里有最先进的球场，最优秀的教练，最前卫的网球训练课程，以及最令人亢奋的网球运动气氛，但听说他们只对网球高手开放？<br/>AI2HIT替你解答这个疑问，我们为网球爱好者争取到一个前所未有的机会，如果你是资深网球迷，想去感受一下斯坦福大学让人亢奋的网球气氛，又如果你是打了一手好网球的莘莘学子，想领略世界第一网球学府的风采，你们的机会来了。<br/>AI2HIT经过不断努力，终于解锁封闭的斯坦福大学网球场，并与世界知名网球教练一起，正式邀请我国热爱网球的你前去参观；如果网球爱好者，如果你是向往斯坦福大学的莘莘学子，又怎舍得错过这次机会。"
+				},
+				{name: '美国PGA锦标赛⛳️', time: '8月10日—8月13日', location: '惊恐山谷', active: 'none'},
+				{name: '全运会游学', time: '8月13日—8月20日', location: '天津', active: 'none', description: '网球单项赛：8月10日—8月19日'},
+				{
+					name: '美网公开赛游学团－第一团',
+					time: '8月24日—8月31日',
+					location: '纽约 🇺🇸',
+					active: 'none',
+					description: '赛程：8月28日—9月10日'
+				},
+				{
+					name: '美网公开赛游学团－第二团',
+					time: '8月30日—9月6日',
+					location: '纽约 🇺🇸',
+					active: 'none',
+					description: '赛程：8月28日—9月10日'
+				},
+				{name: '武汉公开赛游', time: '9月20日—9月26日', location: '武汉', active: 'none', description: '赛程：9月24日—9月30日'},
+				{name: '中国网球公开赛游', time: '9月27日—10月4日', location: '北京', active: 'none', description: '赛程：9月29日—10月8日'},
+				{
+					name: '上海网球大师赛游学团',
+					time: '10月5日—10月11日',
+					location: '中国金融中心',
+					action: '观赛',
+					action2: '旅游',
+					action3: "培训",
+					deadline: "2017年9月15日",
+					contact: "彭健彪: 173-6186-2805",
+					highlight: "★ATP大师赛上海站，一直受到世界顶级选手的关注；★魔都上海，中国金融中心，世界时尚之都 ★亲历ATP网球赛的同时，体验上海网球文化 ★看上海风景、品世界美食",
+					description: "上海这个国际化大都市，有着太多的传奇故事，而随着时间的推移，老上海的传奇慢慢消失，现在的上海已经成长为我国的金融中心，成为顶尖的国际化大都市，更是亚洲的时尚之都，上海究竟有什么？上海什么都有。<br/>上海的体育运动领域发展一直是我国的排头兵，特别是在网球领域的发展，上海曾多次举办ATP年终总决赛，网球文化在上海申根发芽，而上海对于网球运动的关注，也处于全国的领先水平，在结束ATP年终总决赛的举办期限后，上海继续承办ATP1000网球大师赛，虽然重要程度降低，但热度一点儿没奖，而且受到众多世界一流好手的重视，上海ATP1000网球大师赛，仍然是中国网球迷们的一场盛宴。<br/>AI2HIT，作为坐落在上海的小球类只能运动社交平台，长时间关注并组织在我国各地举办的世界级小球类运动赛事，上海ATP1000网球大师赛同样我们也非常关注。<br/>现在我们的机会来了，AI2HIT组织上海ATP1000网球大师赛观赛游活动，迎接全国各地的网球爱好者们，为你们安排看球，安排住宿，安排游玩，还安排了全球的美食等各位来品尝，特别安排的是，我们请到了生活在上海的世界知名网球教练，以及他们的教练团，让大家在看球、看上海的同时，还能打球、学打球，这么好的活动，怎么可以错过呢？"
+				},
+				{
+					name: 'WTA年终总决赛游学团',
+					time: '10月22日—10月29日',
+					location: '新加坡 🇸🇬',
+					action: '观赛',
+					action2: '旅游',
+					action3: "培训",
+					deadline: "2017年9月15日",
+					contact: "彭健彪: 173-6186-2805",
+					highlight: "★WTA总决赛，还有什么好说的★新加坡，最宜居的国家之一",
+					description: "如果你是真正的网球迷，你绝对不止关注ATP，你也同时会关注WTA，你记忆力的WTA有谁？大威小威？莎拉波娃？沃兹尼亚奇？虽然现在的WTA已经没有了李娜，但世界女子顶级赛事的舞台，一样精彩纷呈，每年一度的WTA总决赛就有来了，这次举办国家新加坡，是一个世界级宜居城市，是一个旅游的圣地，当然在网球的世界里，今年10月还是一个嘉年华。<br/>总决赛永远是受到最多关注的，而真正的网球迷，接下来会关注每一场有小威的WTA赛事，作为已经36岁的老将，虽然小威仍然保持着极高的竞技状态，但随着时光的流逝，他的大型赛事出场次数已经在倒数，小威这位女子网坛奇迹般的人物，我相信你不愿意错过她接下来任何一场对决。<br/>AI2HIT为了让大家不错过任何一场历史性的比赛，已与新加坡对接完成，并开始组织本次新加坡WTA年终总决赛旅游观赛活动，在保证各位网球迷们能看上比赛的同时，还能住好、吃好、玩好，组织一场难忘的WTA总决赛之旅。"
+				},
+				//{name:'', time:'',location:''}
+				{name: '全美网球公开赛🎾', time: '8月22日—9月10日', location: '纽约 🇺🇸', active: 'none'},
+				{name: 'ATP年终决赛游学团', time: '11月12日—11月19日', location: '伦敦 🇬🇧', active: 'none'},
+				{name: '澳大利亚网球公开赛🎾游学团', time: '2018年1月15日—1月28日', location: '墨尔本 🇦🇺', active: 'none'},
+				{name: '迈阿密网球大师赛🎾游学团', time: '2018年3月19日', location: '美国 🇺🇸', active: 'none'},
+				{name: '美国名人赛⛳️', time: '2018年4月', location: '佐治亚州 🇺🇸', active: 'none'},
+				{name: '昆明网球公开赛游学团', time: '2018年4月', location: '昆明', active: 'none'},
+				{name: '法网公开赛游学团', time: '2018年5月28日', location: '巴黎', active: 'none'},
+				{name: '美国公开赛⛳️', time: '2018年6月', location: '辛纳科克山 🇺🇸', active: 'none'},
+				{name: '英国公开赛⛳️', time: '2018年7月', location: '卡娜斯蒂 🇬🇧林克斯球场', active: 'none'},
+				{name: '温网公开赛游学团', time: '2018年7月2日—7月5日', location: '伦敦 🇬🇧', active: 'none'},
+				{name: '国际女子网球安宁公开赛游学团', time: '2018年7月6日—7月13日', location: '云南安宁', active: 'none'},
+				{name: '斯坦福网球公开赛夏令营', time: '2018年7月30日—8月5日', location: '美国加州硅谷', active: 'none'},
+				//{name:'斯坦福网球交流会', time:'2018年7月30日－8月5日',location:'斯坦福大学 🇺🇸', active:'none'},
+				{name: 'Rogers Cup 游学团', time: '2018年8月6日', location: '多伦多 🇨🇦', active: 'none'},
+				{name: '全美网球公开赛🎾游学团', time: '2018年8月27日—9月8日', location: '纽约 🇺🇸', active: 'none'},
+				{name: '上海网球大师赛游学团', time: '2018年10月8日－10月15日', location: '上海', active: 'none'},
+				{name: 'WTA年终总决赛游学团', time: '2018年10月22日—10月29日', location: '新加坡 🇸🇬', active: 'none'},
+				{name: 'ATP年终总决赛游学团', time: '2018年11月12日—11月19日', location: '伦敦 🇬🇧', active: 'none'}
+			]
+		},
+		filters: {
+			truncate: function (string, value) {
+				return string.substring(0, value) + '...';
+			}
+		},
+	})
+
+
+</script>

@@ -1,0 +1,25 @@
+/*From index*/
+body{font-size: 12px; font-family: roboto; margin:0;}
+.container{max-width: 1500px; display: block;margin:0 auto; width: calc(100% - 200px);}
+.none{visibility: hidden;}
+.right{float: right; display: block}
+
+/*Overrides Element UI*/
+.orange{color:#F39E33;}
+.el-button--primary { background-color: #F39E33;border-color: #F39E33;}
+.el-button--primary:hover { background-color: #F8B969;border-color: #F8B969;}
+.el-button--text{color:#F39E33;}
+.ui.styled.fluid.accordion {margin: 6px 0;}
+
+/*#app{display: block; margin: 0 auto; max-width: 1280px;}*/
+.content, .header{margin: 0 2%;}
+.header {height: 65px;}
+.logo img {max-width: 80px; margin: 5% 0;}
+
+.label_text{background-color: #eee;margin-bottom:10px; padding: 5px 10px;}
+label{font-size: 16px;}
+.field{margin:5px 10px;}
+.field label{display:inline-block; width: 15%; min-width: 72px;}
+.field .el-input{display: inline-block; width: 80%;}
+
+.save { display: block; margin: 5px auto; width: 80%;}
